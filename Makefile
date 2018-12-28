@@ -23,11 +23,11 @@ local:
 
 darwin64:
 	env GOOS=darwin GOARCH=amd64 go build -ldflags $(LDFLAGS) -o $(BIN)-darwin64-$(HEAD)
-	tar czvf $(BIN)-darwin64-$(HEAD).tgz $(BIN)-darwin64-$(HEAD)
+	# tar czvf $(BIN)-darwin64-$(HEAD).tgz $(BIN)-darwin64-$(HEAD)
 
 linux64:
 	env GOOS=linux GOARCH=amd64 go build -ldflags $(LDFLAGS) -o $(BIN)-linux64-$(HEAD)
-	tar czvf $(BIN)-linux64-$(HEAD).tgz $(BIN)-linux64-$(HEAD)
+	# tar czvf $(BIN)-linux64-$(HEAD).tgz $(BIN)-linux64-$(HEAD)
 
 print: build
 	$(info aws s3 cp "$(BIN)-linux64-$(HEAD)" "$(DEPLOYMENT_PATH)" --sse AES256)
