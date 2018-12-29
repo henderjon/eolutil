@@ -40,16 +40,7 @@ func main() {
 	var wait sync.WaitGroup
 
 	for _, file := range files {
-		stats, err := os.Stat(file)
-		if err != nil {
-			logger.Println(err)
-		}
-
-		source, err := os.OpenFile(file, os.O_RDWR, stats.Mode())
-		if err != nil {
-			logger.Println(err)
-		}
-
+		source := openFile(file)
 		wait.Add(1)
 		go func() {
 			defer source.Close()
@@ -64,6 +55,19 @@ func main() {
 		}()
 	}
 	wait.Wait()
+}
+
+func openFile(fname string) *os.File {
+	stats, err := os.Stat(fname)
+	if err != nil {
+		logger.Println(err)
+	}
+
+	source, err := os.OpenFile(fname, os.O_RDWR, stats.Mode())
+	if err != nil {
+		logger.Println(err)
+	}
+	return source
 }
 
 func readFile(source *os.File, eol string) bytes.Buffer {
