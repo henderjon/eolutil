@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"io"
 	"os"
 	"path/filepath"
 	"sync"
@@ -70,7 +71,7 @@ func openFile(fname string) *os.File {
 	return source
 }
 
-func readFile(source *os.File, eol string) bytes.Buffer {
+func readFile(source io.Reader, eol string) bytes.Buffer {
 	var dest bytes.Buffer
 	scanner := bufio.NewScanner(source)
 
